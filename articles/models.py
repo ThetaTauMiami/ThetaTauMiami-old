@@ -24,6 +24,12 @@ class InGallery(models.Model):
     def __unicode__(self):
         return str(self.gallery) + " - " + str(self.image)
     
+class ArticleCategory(models.Model):
+    name = models.CharField(max_length=50)
+    
+    def __unicode__(self):
+        return self.name
+    
 class Article(models.Model):
     title = models.CharField(max_length=200)
     author = models.ForeignKey(Brother)
@@ -31,6 +37,6 @@ class Article(models.Model):
     article_xml = models.FileField(upload_to="articles/xml/")
     default_picture = models.ForeignKey(Picture)
     gallery = models.ForeignKey(Gallery)
-
+    category = models.ForeignKey(ArticleCategory)
     def __unicode__(self):
         return str(self.date) + " " + str(self.author) + ": " + self.title
