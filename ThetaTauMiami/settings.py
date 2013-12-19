@@ -26,7 +26,7 @@ DEBUG = False
 
 TEMPLATE_DEBUG = False
 
-ALLOWED_HOSTS = ['localhost', 'aqueous-ravine-6084.herokuapp.com/']
+ALLOWED_HOSTS = ['localhost', 'aqueous-ravine-6084.herokuapp.com']
 
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates/'),
