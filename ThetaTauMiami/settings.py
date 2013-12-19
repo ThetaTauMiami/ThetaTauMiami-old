@@ -22,9 +22,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = 'q=asy$r^!q72tp@x2f6kxg83d)+@mg59u0v8#pby^bv(=n4__0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-TEMPLATE_DEBUG = False
+TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', 'aqueous-ravine-6084.herokuapp.com']
 
@@ -65,10 +65,10 @@ WSGI_APPLICATION = 'ThetaTauMiami.wsgi.application'
 DATABASES = dict()
 
 # Production setting
-DATABASES['default'] = dj_database_url.config()
+#DATABASES['default'] = dj_database_url.config()
 
 # Local setting
-#DATABASES['default'] = { "ENGINE" : 'django.db.backends.sqlite', "NAME": "db.sqlite3" }
+DATABASES['default'] = { "ENGINE" : 'django.db.backends.sqlite', "NAME": "db.sqlite3" }
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
