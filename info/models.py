@@ -11,6 +11,9 @@ class PledgeClass(models.Model):
     def __unicode__(self):
         return self.year + " " + self.semester
     
+    def __str__(self):
+        return self.__unicode__()
+    
 class Brother(models.Model):
     firstName = models.CharField(max_length=50)
     middleName = models.CharField(max_length=50)
@@ -28,12 +31,18 @@ class Brother(models.Model):
     
     def __unicode__(self):
         return str(self.pledgeClass) + " - " + self.lastName + ", " + self.firstName + " " + self.middleName
+    
+    def __str__(self):
+        return self.__unicode__()
      
 class Department(models.Model):
     abbrev = models.CharField(max_length=3)
     name = models.CharField(max_length=150)
     def __unicode__(self):
         return self.abbrev
+    
+    def __str__(self):
+        return self.__unicode__()
        
 class Major(models.Model):
     department = models.ForeignKey(Department)
@@ -41,10 +50,18 @@ class Major(models.Model):
     
     def __unicode__(self):
         return self.majorName
+    
+    def __str__(self):
+        return self.__unicode__()
 
 class HasMajor(models.Model):
     brother = models.ForeignKey(Brother)
     major = models.ForeignKey(Major)
     
-    def ___unicode__(self):
-        return str(self.brother) + " " + str(self.major)
+    def __unicode__(self):
+        return str(self.brother) + " - " + str(self.major)
+    
+    def __str__(self):
+        return self.__unicode__()
+    
+    
