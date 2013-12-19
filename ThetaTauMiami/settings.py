@@ -64,7 +64,13 @@ WSGI_APPLICATION = 'ThetaTauMiami.wsgi.application'
 
 DATABASES = dict()
 
+# Production setting
 DATABASES['default'] = dj_database_url.config()
+
+# Local setting
+#DATABASES['default'] = {
+
+#}
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
