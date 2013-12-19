@@ -27,7 +27,7 @@ class Brother(models.Model):
     bio = models.CharField(max_length=500)
     
     def __unicode__(self):
-        return str(self.pledgeClass) + " " + self.lastName + ", " + self.firstName + " " + self.middleName
+        return str(self.pledgeClass) + " - " + self.lastName + ", " + self.firstName + " " + self.middleName
      
 class Department(models.Model):
     abbrev = models.CharField(max_length=3)

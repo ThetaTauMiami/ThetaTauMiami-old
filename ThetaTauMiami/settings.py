@@ -22,11 +22,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = 'q=asy$r^!q72tp@x2f6kxg83d)+@mg59u0v8#pby^bv(=n4__0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-TEMPLATE_DEBUG = True
+TEMPLATE_DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', 'aqueous-ravine-6084.herokuapp.com/']
 
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates/'),
@@ -68,9 +68,7 @@ DATABASES = dict()
 DATABASES['default'] = dj_database_url.config()
 
 # Local setting
-#DATABASES['default'] = {
-
-#}
+#DATABASES['default'] = { "ENGINE" : 'django.db.backends.sqlite', "NAME": "db.sqlite3" }
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
