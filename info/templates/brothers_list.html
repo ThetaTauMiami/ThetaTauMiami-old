@@ -20,7 +20,11 @@
       
       	{% for brother in brother_list %}
         <div class="col-md-4 portfolio-item">
-          <a href="/info/brother/{{brother.id}}"><img class="img-responsive" src="{{brother.picture}}" width=400></a>
+          <div style="max-width:700px; max-height:400px;">
+            <a href="/info/brother/{{brother.id}}">
+          	  <img class="img-responsive" src="{{brother.picture}}" style="max-width:100%; max-height:100%;">
+            </a>
+          </div>
           <h3><a href="portfolio-item.html">{{brother.firstName}} {{brother.lastName}}</a></h3>
           <p>Pledge Class: {{brother.pledgeClass.name}}</p>
           <p>{{brother.bio}}</p>

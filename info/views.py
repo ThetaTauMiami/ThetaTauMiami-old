@@ -25,31 +25,20 @@ def officers(request):
     return HttpResponse(t.render(c))
 
 def actives(request):
-    t = loader.get_template('brothers_list.html')
-    brothers = Brother.objects.filter(isAlumni=False, isPledge=False).order_by('-lastName')
-    if len(brothers) > 0:
-        brother_list_list = utility.convert_array_to_Yx3(brothers)
-    else:
-        brother_list_list = None
-    c = Context({'brotherType': 'Active Members', 'brother_list_list' : brother_list_list})
-    return HttpResponse(t.render(c))
+    return general_listing(request, False, False, 'Active Members')
 
 def pledges(request):
-    t = loader.get_template('brothers_list.html')
-    brothers = Brother.objects.filter(isPledge=True)
-    if len(brothers) > 0:
-        brother_list_list = utility.convert_array_to_Yx3(brothers)
-    else:
-        brother_list_list = None
-    c = Context({'brotherType': 'Pledges', 'brother_list_list' : brother_list_list})
-    return HttpResponse(t.render(c))
+    return general_listing(request, False, True, 'Pledges')
 
 def alumni(request):
+    return general_listing(request, True, False, 'Alumni')
+
+def general_listing(request, isAlumniFilter, isPledgeFilter, name):
     t = loader.get_template('brothers_list.html')
-    brothers = Brother.objects.filter(isAlumni=True)
+    brothers = Brother.objects.filter(isAlumni=isAlumniFilter, isPledge=isPledgeFilter).order_by('lastName', 'firstName', 'middleName')
     if len(brothers) > 0:
         brother_list_list = utility.convert_array_to_Yx3(brothers)
     else:
         brother_list_list = None
-    c = Context({'brotherType': 'Alumni', 'brother_list_list' : brother_list_list})
+    c = Context({'brotherType': name, 'brother_list_list' : brother_list_list})
     return HttpResponse(t.render(c))
