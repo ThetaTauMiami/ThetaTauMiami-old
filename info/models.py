@@ -64,4 +64,16 @@ class HasMajor(models.Model):
     def __str__(self):
         return self.__unicode__()
     
+class Officer(models.Model):
+    brother = models.ForeignKey(Brother)
+    position = models.CharField(max_length=50)
+    ordering = models.IntegerField() # Represents the order it appears on the page
+    overview = models.CharField(max_length=500)
+    
+    def __unicode__(self):
+        return self.position
+    
+    def __str__(self):
+        return self.__unicode__()
+    
     
