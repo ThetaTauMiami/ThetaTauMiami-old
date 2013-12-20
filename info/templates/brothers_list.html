@@ -12,83 +12,24 @@
         </div>
 
       </div><!-- /.row -->
-
-
-	{% if brother_list %}
-     {% for brother in brother_list %}
-     	{{ brother.lastName }} <br />
-     {% endfor %}
-	{% else %}
-		There are no brothers.... awkward.
-	{% endif %}
-
+      
+	{% if brother_list_list %}
+	
+	  {% for brother_list in brother_list_list %}
       <div class="row">
       
-
+      	{% for brother in brother_list %}
         <div class="col-md-4 portfolio-item">
-          <a href="portfolio-item.html"><img class="img-responsive" src="http://placehold.it/700x400"></a>
-          <h3><a href="portfolio-item.html">Project Name</a></h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
+          <a href="/info/brother/{{brother.id}}"><img class="img-responsive" src="{{brother.picture}}" width=400></a>
+          <h3><a href="portfolio-item.html">{{brother.firstName}} {{brother.lastName}}</a></h3>
+          <p>Pledge Class: {{brother.pledgeClass.name}}</p>
+          <p>{{brother.bio}}</p>
         </div>
-
-        <div class="col-md-4 portfolio-item">
-          <a href="portfolio-item.html"><img class="img-responsive" src="http://placehold.it/700x400"></a>
-          <h3><a href="portfolio-item.html">Project Name</a></h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-        </div>
-
-        <div class="col-md-4 portfolio-item">
-          <a href="portfolio-item.html"><img class="img-responsive" src="http://placehold.it/700x400"></a>
-          <h3><a href="portfolio-item.html">Project Name</a></h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-        </div>
-
+		{% endfor %}
       </div>
 
-      <div class="row">
 
-        <div class="col-md-4 portfolio-item">
-          <a href="portfolio-item.html"><img class="img-responsive" src="http://placehold.it/700x400"></a>
-          <h3><a href="portfolio-item.html">Project Name</a></h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-        </div>
-
-        <div class="col-md-4 portfolio-item">
-          <a href="portfolio-item.html"><img class="img-responsive" src="http://placehold.it/700x400"></a>
-          <h3><a href="portfolio-item.html">Project Name</a></h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-        </div>
-
-        <div class="col-md-4 portfolio-item">
-          <a href="portfolio-item.html"><img class="img-responsive" src="http://placehold.it/700x400"></a>
-          <h3><a href="portfolio-item.html">Project Name</a></h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-        </div>
-
-      </div>
-
-      <div class="row">
-
-        <div class="col-md-4 portfolio-item">
-          <a href="portfolio-item.html"><img class="img-responsive" src="http://placehold.it/700x400"></a>
-          <h3><a href="portfolio-item.html">Project Name</a></h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-        </div>
-
-        <div class="col-md-4 portfolio-item">
-          <a href="portfolio-item.html"><img class="img-responsive" src="http://placehold.it/700x400"></a>
-          <h3><a href="portfolio-item.html">Project Name</a></h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-        </div>
-
-        <div class="col-md-4 portfolio-item">
-          <a href="portfolio-item.html"><img class="img-responsive" src="http://placehold.it/700x400"></a>
-          <h3><a href="portfolio-item.html">Project Name</a></h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-        </div>
-
-      </div>
-
+	  {% endfor %}
       <hr>
 
       <div class="row text-center">
@@ -106,7 +47,9 @@
         </div>
 
       </div>
-
+	{% else %}
+		<p>There do not appear to be any brothers...</p>
+	{% endif %}
     </div><!-- /.container -->
 
 {% endblock %}
