@@ -34,26 +34,46 @@
 
 
 	  {% endfor %}
+	  
+	  
+	{% else %}
+		<p>There do not appear to be any brothers...</p>
+	{% endif %}
       <hr>
 
       <div class="row text-center">
         
         <div class="col-lg-12">
           <ul class="pagination">
-            <li><a href="#">&laquo;</a></li>
-            <li class="active"><a href="#">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">4</a></li>
-            <li><a href="#">5</a></li>
-            <li><a href="#">&raquo;</a></li>
+          	{% if prev_page == 0 %}
+          	
+          	{% else %}
+	           	{% if brothers_count %}
+	           		<li><a href="?page={{ prev_page }}&count={{ brothers_count }}">&laquo;</a></li>
+	           	{% else %}
+	           		<li><a href="?page={{ prev_page }}">&laquo;</a></li>
+	           	{% endif %}
+           	{% endif %}
+            {% for i in page_numbers %}
+            	{% if page_number == i %}
+            		<li class="active"><a href="#">{{ page_number }}</a></li>
+            	{% else %}
+	            	{% if brothers_count %}
+	            		<li><a href="?page={{ i }}&count={{ brothers_count }}">{{ i }}</a></li>
+	            	{% else %}
+	            		<li><a href="?page={{ i }}">{{ i }}</a></li>
+	            	{% endif %}
+	            {% endif %}
+            {% endfor %}
+           	{% if brothers_count %}
+           		<li><a href="?page={{ next_page }}&count={{ brothers_count }}">&raquo;</a></li>
+           	{% else %}
+           		<li><a href="?page={{ next_page }}">&raquo;</a></li>
+           	{% endif %}
           </ul>        
         </div>
 
       </div>
-	{% else %}
-		<p>There do not appear to be any brothers...</p>
-	{% endif %}
     </div><!-- /.container -->
 
 {% endblock %}

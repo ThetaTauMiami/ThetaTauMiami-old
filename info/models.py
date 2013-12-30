@@ -28,10 +28,23 @@ class Brother(models.Model):
     resume          = models.URLField()
     address         = models.CharField(max_length=200)
     bio             = models.CharField(max_length=500)
-    email           = models.EmailField()
     
     def __unicode__(self):
         return str(self.pledgeClass) + " - " + self.lastName + ", " + self.firstName + " " + self.middleName
+    
+    def __str__(self):
+        return self.__unicode__()
+     
+class Alumni(models.Model):
+    brother = models.ForeignKey(Brother)
+    currentJob = models.CharField(max_length=100)
+    currentCompany = models.CharField(max_length=150)
+    jobOnGraduation = models.CharField(max_length=100)
+    companyOnGraduation = models.CharField(max_length=150)
+    email = models.EmailField()
+    
+    def __unicode__(self):
+        return str(self.brother)
     
     def __str__(self):
         return self.__unicode__()
