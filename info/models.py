@@ -81,7 +81,7 @@ class HasMajor(models.Model):
 class Officer(models.Model):
     brother  = models.ForeignKey(Brother)
     position = models.CharField(max_length=50)
-    ordering = models.IntegerField() # Represents the order it appears on the page
+    ordering = models.IntegerField() # Represents the order it appears on the page - ties have no guarantee on how they will be ordered
     overview = models.CharField(max_length=500)
     
     def __unicode__(self):

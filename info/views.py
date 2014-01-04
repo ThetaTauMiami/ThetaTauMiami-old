@@ -3,7 +3,7 @@ import math
 from django.http import HttpResponse
 from django.template import Context, loader
 
-from info.models import Brother
+from info.models import Brother, Officer
 from info import utility
 
 max_brothers_per_page = 24
@@ -21,9 +21,9 @@ def index(request):
 
 
 def officers(request):
-    t = loader.get_template('brothers_list.html')
-    brothers = None
-    c = Context({'brotherType': 'Officers', 'brother_list' : brothers})
+    officers = Officer.objects.filter().order_by('ordering')
+    c = Context({'officer_list': officers})
+    t = loader.get_template('officers_list.html')
     return HttpResponse(t.render(c))
 
 def actives(request):
