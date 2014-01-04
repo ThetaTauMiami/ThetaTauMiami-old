@@ -13,27 +13,30 @@
         </div>
 
       </div> 
+    
+       <div class="container">
+       
+       {% for officer_list in officer_list_list %}
 
-	{% for officer in officer_list %}
-      <div class="row">
+  		   <div class="row">
 
-        <div class="col-md-7">
-          <div style="max-width:750px; max-height:350px;">
-            <a href="/info/brother/{{officer.brother.id}}">
-          	  <img class="img-responsive" src="{{officer.brother.picture}}" style="max-width:100%; max-height:100%; margin-right:auto; margin-left:auto;">
-            </a>
-           </div>
-        </div>
+		{% for officer in officer_list %}
+	        <div class="col-md-6 portfolio-item" > 
+	          <div style="max-width:750px; max-height:450px;">
+	          	<a href="/info/brother/{{ officer.brother.id }}"><img class="img-responsive" src="{{ officer.brother.picture }}" style="margin-left: auto; margin-right: auto;"></a>
+	          </div>
+	          <div id="{{ officer.position }}Info" style="text-align: center">
+	          	<h3>{{ officer.position }}</h3>
+	          	<p>{{ officer.brother.firstName }} {{ officer.brother.lastName }}</p>
+	          </div>
+	        </div>
+		{% endfor %}
 
-        <div class="col-md-5">
-          <h3>{{ officer.position }}</h3>
-          <h4>{{ officer.brother.firstName }} {{ officer.brother.lastName }}</h4>
-        </div>
+     	   </div>
+     
+       {% endfor %}
 
-      </div>
-      <hr />
-     {% endfor %}
-
+       <hr />
 
     </div><!-- /.container -->
 {% endblock %}
