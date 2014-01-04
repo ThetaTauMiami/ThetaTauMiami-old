@@ -46,21 +46,43 @@ def general_listing(request, isAlumniFilter, isPledgeFilter, name):
     page_number = request.GET.get('page','1')
     try:
         page_number = int(page_number)
+        if page_number < 1:
+            page_number = 1
     except:
         page_number = 1
     brothers_range_min = (page_number - 1) * brothers_count
     brothers_range_max = (page_number) * brothers_count
     t = loader.get_template('brothers_list.html')
-    brothers = Brother.objects.filter(isAlumni=isAlumniFilter, isPledge=isPledgeFilter).order_by('lastName', 'firstName', 'middleName')[brothers_range_min:brothers_range_max]
-    if len(brothers) > 0:
-        brother_list_list = utility.convert_array_to_Yx3(brothers)
-    else:
-        brother_list_list = None
-    page_numbers_list = range(1,6)
-    next_page = page_number + 1
+    brothers = Brother.objects.filter(isAlumni=isAlumniFilter, isPledge=isPledgeFilter).order_by('lastName', 'firstName', 'middleName')
+    number_of_brothers = len(brothers)
+    total_pages = (number_of_brothers / brothers_count) + 1
+    brothers = brothers[brothers_range_min:brothers_range_max]
+    brother_list_list = utility.convert_array_to_Yx3(brothers) if len(brothers) > 0 else None
+    page_numbers_list = calculate_page_range(total_pages, page_number)
+    next_page = page_number + 1 if number_of_brothers > brothers_range_max else 0
     prev_page = page_number - 1
     context_dict = {'brotherType': name, 'brother_list_list' : brother_list_list, 'page_number' : page_number, 'prev_page': prev_page, 'next_page' : next_page, 'page_numbers' : page_numbers_list}
     if brothers_count != 9:
         context_dict['brothers_count'] = brothers_count
     c = Context(context_dict)
     return HttpResponse(t.render(c))
+
+def calculate_page_range(total_pages, page_number):
+    max_pages_listed_on_screen = 5
+    if total_pages == page_number: # If there is only the one page, there is no need to display page numbers
+        return []
+    elif total_pages <= max_pages_listed_on_screen: # In this case, just display all of the available pages
+        min_page_number_displayed = 1
+        max_page_number_displayed = total_pages + 1
+    elif page_number - max_pages_listed_on_screen / 2 <= 1: # We are near the beginning. In this case, display from page 1 to max_pages_listed_on_screen
+        min_page_number_displayed = 1
+        max_page_number_displayed = min_page_number_displayed + max_pages_listed_on_screen
+    elif page_number + max_pages_listed_on_screen / 2 >= total_pages: # We are near the end. In this case, display from (end - max_pages_listed_on_screen) to end
+        max_page_number_displayed = total_pages
+        min_page_number_displayed = max_page_number_displayed - max_pages_listed_on_screen
+    else: # We are somewhere in the middle. In this case, just display some pages on either side
+        min_page_number_displayed = page_number - 2
+        max_page_number_displayed = min_page_number_displayed + max_pages_listed_on_screen
+    
+    page_numbers_list = range(min_page_number_displayed,max_page_number_displayed)    
+    return page_numbers_list

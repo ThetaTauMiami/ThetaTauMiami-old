@@ -65,10 +65,14 @@
 	            	{% endif %}
 	            {% endif %}
             {% endfor %}
-           	{% if brothers_count %}
-           		<li><a href="?page={{ next_page }}&count={{ brothers_count }}">&raquo;</a></li>
-           	{% else %}
-           		<li><a href="?page={{ next_page }}">&raquo;</a></li>
+            {% if next_page == 0 %}
+            
+            {% else %}
+	           	{% if brothers_count %}
+	           		<li><a href="?page={{ next_page }}&count={{ brothers_count }}">&raquo;</a></li>
+	           	{% else %}
+	           		<li><a href="?page={{ next_page }}">&raquo;</a></li>
+	           	{% endif %}
            	{% endif %}
           </ul>        
         </div>
