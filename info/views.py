@@ -11,16 +11,13 @@ standard_brothers_per_page = 9
 brothers_per_row = 3
 max_pages_listed_on_screen = 5
 officers_per_row = 2
+exec_board_members_per_row_on_about_page = 3
 
-# Create your views here.
+
 def index(request):
-    t = loader.get_template('brothers_list.html')
-    brothers = Brother.objects.all()
-    if len(brothers) > 0:
-        brother_list_list = utility.convert_array_to_YxZ(brothers, brothers_per_row)
-    else:
-        brother_list_list = None
-    c = Context({'brotherType': 'All Brothers', 'brother_list_list' : brother_list_list})
+    t = loader.get_template('about.html')
+    officer_list = Officer.objects.filter().order_by('ordering')
+    c = Context({'officer_list': officer_list})
     return HttpResponse(t.render(c))
 
 
