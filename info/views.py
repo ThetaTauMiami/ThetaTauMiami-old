@@ -10,6 +10,7 @@ max_brothers_per_page = 24
 standard_brothers_per_page = 9
 brothers_per_row = 3
 max_pages_listed_on_screen = 5
+officers_per_row = 2
 
 # Create your views here.
 def index(request):
@@ -25,7 +26,7 @@ def index(request):
 
 def officers(request):
     officers = Officer.objects.filter().order_by('ordering')
-    officers_matrix = utility.convert_array_to_YxZ(officers, 2)
+    officers_matrix = utility.convert_array_to_YxZ(officers, officers_per_row)
     c = Context({'officer_list_list': officers_matrix})
     t = loader.get_template('officers_list.html')
     return HttpResponse(t.render(c))
