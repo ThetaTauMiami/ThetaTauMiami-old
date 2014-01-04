@@ -36,23 +36,10 @@ def alumni(request):
     return general_listing(request, True, False, 'Alumni')
 
 def general_listing(request, isAlumniFilter, isPledgeFilter, name):
-    brothers_count = request.GET.get('count','9')
-    try:
-        brothers_count = int(brothers_count)
-        if brothers_count > max_brothers_per_page:
-            brothers_count = max_brothers_per_page
-    except:
-        brothers_count = 9
-    page_number = request.GET.get('page','1')
-    try:
-        page_number = int(page_number)
-        if page_number < 1:
-            page_number = 1
-    except:
-        page_number = 1
+    brothers_count = get_brother_count(request)
+    page_number = get_page_number(request)
     brothers_range_min = (page_number - 1) * brothers_count
     brothers_range_max = (page_number) * brothers_count
-    t = loader.get_template('brothers_list.html')
     brothers = Brother.objects.filter(isAlumni=isAlumniFilter, isPledge=isPledgeFilter).order_by('lastName', 'firstName', 'middleName')
     number_of_brothers = len(brothers)
     total_pages = (number_of_brothers / brothers_count) + 1
@@ -65,7 +52,28 @@ def general_listing(request, isAlumniFilter, isPledgeFilter, name):
     if brothers_count != 9:
         context_dict['brothers_count'] = brothers_count
     c = Context(context_dict)
+    t = loader.get_template('brothers_list.html')
     return HttpResponse(t.render(c))
+
+def get_brother_count(request):
+    brothers_count = request.GET.get('count','9')
+    try:
+        brothers_count = int(brothers_count)
+        if brothers_count > max_brothers_per_page:
+            brothers_count = max_brothers_per_page
+    except:
+        brothers_count = 9
+    return brothers_count
+
+def get_page_number(request):
+    page_number = request.GET.get('page','1')
+    try:
+        page_number = int(page_number)
+        if page_number < 1:
+            page_number = 1
+    except:
+        page_number = 1
+    return page_number
 
 def calculate_page_range(total_pages, page_number):
     max_pages_listed_on_screen = 5
