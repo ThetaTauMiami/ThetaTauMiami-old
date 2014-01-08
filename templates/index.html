@@ -5,36 +5,44 @@
 		<!-- Indicators -->
 		<ol class="carousel-indicators">
 			<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-			<li data-target="#myCarousel" data-slide-to="1"></li>
-			<li data-target="#myCarousel" data-slide-to="2"></li>
+			{% for num in article_numbers %}
+			<li data-target="#myCarousel" data-slide-to="{{ num }}"></li>
+			{% endfor %}
 		</ol>
 
 		<!-- Wrapper for slides -->
 		<div class="carousel-inner">
 			<div class="item active">
 				<div class="fill"
-					style="background-image: url('//www.users.miamioh.edu/rogerskw/thetatau/thetatau.png'); background-size: contain; background-repeat: no-repeat; background-color: #666666;"></div>
+					style="background-image: url('{{ first_ae.article.default_picture.image }}');"></div>
+				<div class="carousel-caption">
+					<a href="/articles/{{ first_ae.article.id }}" style="color:#ffffff">
+						<h1>{{ first_ae.article.title }}</h1>
+						<h4>{{ first_ae.subtitle }}</h4>
+					</a>
+				</div>
+			</div>
+			{% for ae in article_entity_list %}
+			<div class="item">
+				<div class="fill"
+					style="background-image: url('{{ ae.article.default_picture.image }}');"></div>
+				<div class="carousel-caption">
+					<a href="/articles/{{ ae.article.id }}" style="color:#ffffff">
+						<h1>{{ ae.article.title }}</h1>
+						<h4>{{ ae.subtitle }}</h4>
+					</a>
+				</div>
+			</div>
+			{% endfor %}
+			<div class="item">
+				<div class="fill"
+					style="background-image: url('{{ nationals_pic.pic }}'); background-size: contain; background-repeat: no-repeat; background-color: #666666;"></div>
 				<div class="carousel-caption">
 					<a href="http://www.thetatau.org" style="color:#ffffff">
 						<h1>Theta Tau</h1>
 						<h4>The Nation's Oldest and Largest Professional Engineering
 							Fraternity</h4>
 					</a>
-				</div>
-			</div>
-			<div class="item">
-				<div class="fill"
-					style="background-image: url('//www.users.miamioh.edu/rogerskw/thetatau/charter_and_alpha.jpg');"></div>
-				<div class="carousel-caption">
-					<h1>Charter and Alpha Pledge Classes</h1><h4></h4>
-				</div>
-			</div>
-			<div class="item">
-				<div class="fill"
-					style="background-image: url('//www.users.miamioh.edu/rogerskw/thetatau/regionalconference_11_13.jpg');"></div>
-				<div class="carousel-caption">
-					<h1>Great Lakes Regional Conference 2013</h1>
-					<h4>The Miami University Colony brought 24 members to the 2013 Great Lakes Regional Conference</h4>
 				</div>
 			</div>
 		</div>
