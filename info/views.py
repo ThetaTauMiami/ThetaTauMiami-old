@@ -1,8 +1,8 @@
 import math
 
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse
 from django.template import Context, loader
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 from info.models import Brother, Officer, BrotherEntity
 from info import utility
@@ -24,10 +24,7 @@ def index(request):
     return HttpResponse(t.render(c))
 
 def brother_profile(request, brother_id):
-    try:
-        bro = Brother.objects.get(pk=brother_id)
-    except Brother.DoesNotExist:
-        raise Http404
+    bro = get_object_or_404(Brother, pk = brother_id)
     return render(request, 'brother_profile.html', {'be': BrotherEntity(bro)})
 
 def officers(request):

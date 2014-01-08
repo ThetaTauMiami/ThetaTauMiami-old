@@ -1,8 +1,12 @@
-from django.db import models
-from info.models import Brother
-from ThetaTauMiami import settings
+import urllib
+import xml.etree.ElementTree as ET
 
-from django.core.files.storage import FileSystemStorage
+from django.db import models
+#from django.core.files.storage import FileSystemStorage
+
+from info.models import Brother
+#from ThetaTauMiami import settings
+
 
 class Picture(models.Model):
 #    image       = models.ImageField(storage=FileSystemStorage(location=settings.MEDIA_ROOT), upload_to="articles/pictures/")
@@ -61,3 +65,18 @@ class Article(models.Model):
     
     def __str__(self):
         return self.__unicode__()
+    
+class ArticleEntity():
+    def __init__(self, article):
+        self.article = article
+        self.subtitle = ''
+        self.paras = []
+        article_x = urllib.urlopen(self.article.article_xml)
+        x = ''
+        for lines in article_x.readlines():
+            x += lines
+        tree = ET.fromstring(x)
+        self.subtitle = tree[1].text
+        for para in tree[2]:
+            self.paras.append( para.text.replace('\\n', '') )
+        

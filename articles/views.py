@@ -1,11 +1,7 @@
-from django.shortcuts import render
-
-from django.http import HttpResponse
+from django.shortcuts import render, get_object_or_404
 from django.template import Context, loader
 
-from django.http import HttpResponse
-
-from articles.models import Article
+from articles.models import Article, ArticleEntity
 
 def index(request):
     t = loader.get_template('article_list.html')
@@ -29,3 +25,7 @@ def social(request):
     t = loader.get_template('article_list.html')
     c = Context({'eventType': 'Social'})
     return HttpResponse(t.render(c))
+
+def get_article(request, article_id):
+    art = get_object_or_404(Article, pk=article_id)
+    return render(request, 'article.html', {'article_entity': ArticleEntity(art)})

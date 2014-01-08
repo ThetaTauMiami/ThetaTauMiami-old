@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}{{ article_entity.article.title }} - &Theta;&Tau; Miami University {% endblock %}
+
+{% block content %}
+
+    <div class="container">
+      
+      <div class="row">
+      
+        <div class="col-lg-12">
+          <h1 class="page-header">{{ article_entity.article.title }} <small>{{ article_entity.article.category.name }}</small></h1>
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="col-lg-8">
+          <p><i class="fa fa-clock-o"></i> Posted on {{ article_entity.article.date }} by <a href="/info/brother/{{ article_entity.article.author.id }}">{{ article_entity.article.author.firstName }} {{ article_entity.article.author.lastName }}</a></p>
+          <hr>
+          <img src="{{ article_entity.article.default_picture.image }}" class="img-responsive">
+          <hr>
+          <p class="lead">{{ article_entity.subtitle }}</p>
+          {% for para in article_entity.paras %}
+          <p> {{ para }} </p>
+          {% endfor %}
+
+          <hr>          
+        </div>
+	</div><!-- /.container -->
+
+{% endblock %}
