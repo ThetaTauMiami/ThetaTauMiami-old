@@ -7,7 +7,7 @@ from articles.models import Article, ArticleEntity
 
 def index(request):
     t = loader.get_template('article_list.html')
-    article_list = Article.objects.all()
+    article_list = Article.objects.all().order_by('date').reverse()
     if len(article_list) == 0:
         article_list = None
     c = Context({'eventType': 'All', 'article_list': article_list})
