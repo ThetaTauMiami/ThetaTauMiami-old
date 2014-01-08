@@ -1,7 +1,8 @@
 import math
 
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.template import Context, loader
+from django.shortcuts import render
 
 from info.models import Brother, Officer, BrotherEntity
 from info import utility
@@ -22,6 +23,12 @@ def index(request):
     c = Context({'officer_list': officer_list, 'group_pic': group_pic})
     return HttpResponse(t.render(c))
 
+def brother_profile(request, brother_id):
+    try:
+        bro = Brother.objects.get(pk=brother_id)
+    except Brother.DoesNotExist:
+        raise Http404
+    return render(request, 'brother_profile.html', {'be': BrotherEntity(bro)})
 
 def officers(request):
     officers = Officer.objects.filter().order_by('ordering')

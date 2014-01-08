@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %} {{ be.brother.firstName }} {{ be.brother.lastName }} {% endblock %}
+
+{% block content %}
+    <div class="container">
+
+      <div class="row">
+
+        <div class="col-lg-12">
+          <h1 class="page-header"> {{ be.brother.firstName }} {{ be.brother.lastName }} <small>{{ be.brother.pledgeClass.name }} Class</small></h1>
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="col-md-8" style="max-width:750px; max-height:500px;">
+          <img class="img-responsive" src="{{ be.brother.picture }}" style="margin-left:auto; margin-right:auto;">
+        </div>
+
+        <div class="col-md-4">
+          <h3>Bio</h3>
+          <p>{{ be.brother.bio }}</p>
+          <h3>Major(s)</h3>
+          <ul>
+          	{% if be.majors %}
+            {% for major in be.majors %}
+            	<li> {{ major.name }} </li>
+            {% endfor %}
+            {% else %}
+            	<li> Undecided Engineering </li>
+            {% endif %}
+          </ul>
+        </div>
+
+      </div>
+
+
+
+    </div><!-- /.container -->
+
+    <div class="container">
+
+{% endblock %} 

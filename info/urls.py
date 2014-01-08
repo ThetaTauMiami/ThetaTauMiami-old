@@ -13,5 +13,6 @@ urlpatterns = patterns('',
     url(r'^actives/$', views.actives, name='actives'),
     url(r'^pledges/$', views.pledges, name='pledges'),
     url(r'^alumni/$', views.alumni, name='alumni'),
+    url(r'^brother/(?P<brother_id>\d+)', views.brother_profile, name="brother_profile")
     
 )
