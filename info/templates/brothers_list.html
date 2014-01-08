@@ -18,16 +18,24 @@
 	  {% for brother_list in brother_list_list %}
       <div class="row">
       
-      	{% for brother in brother_list %}
+      	{% for bro_entity in brother_list %}
         <div class="col-md-4 portfolio-item">
           <div style="max-width:700px; max-height:400px;">
-            <a href="/info/brother/{{ brother.id }}">
-          	  <img class="img-responsive" src="{{brother.picture}}" style="max-width:100%; max-height:100%;">
+            <a href="/info/brother/{{ bro_entity.brother.id }}">
+          	  <img class="img-responsive" src="{{ bro_entity.brother.picture }}" style="max-width:100%; max-height:100%;">
             </a>
           </div>
-          <h3><a href="/info/brother/{{ brother.id }}">{{ brother.firstName }} {{ brother.lastName }}</a></h3>
-          <p>Pledge Class: {{ brother.pledgeClass.name }}</p>
-          <p>{{ brother.bio }}</p>
+          <h3><a href="/info/brother/{{ brother.id }}">{{ bro_entity.brother.firstName }} {{ bro_entity.brother.lastName }}</a></h3>
+          <p>Pledge Class: {{ bro_entity.brother.pledgeClass.name }}</p>
+         	{% if bro_entity.majors %}
+         	
+         	{% for major in bro_entity.majors %}
+         		<div>{{ major.majorName }}&#x0020; </div>
+         	{% endfor %}
+         	
+         	{% else %}
+         		<div>Undecided Engineering</div>
+         	{% endif %}
         </div>
 		{% endfor %}
       </div>

@@ -3,8 +3,9 @@ import math
 from django.http import HttpResponse
 from django.template import Context, loader
 
-from info.models import Brother, Officer
+from info.models import Brother, Officer, BrotherEntity
 from info import utility
+from marketing.models import Picture as MarketingPic
 
 max_brothers_per_page = 24
 standard_brothers_per_page = 9
@@ -17,7 +18,8 @@ exec_board_members_per_row_on_about_page = 3
 def index(request):
     t = loader.get_template('about.html')
     officer_list = Officer.objects.filter().order_by('ordering')
-    c = Context({'officer_list': officer_list})
+    group_pic = MarketingPic.objects.filter(name='Group')[0]
+    c = Context({'officer_list': officer_list, 'group_pic': group_pic})
     return HttpResponse(t.render(c))
 
 
@@ -46,6 +48,7 @@ def general_listing(request, isAlumniFilter, isPledgeFilter, name):
     number_of_brothers = len(brothers)
     total_pages = int(math.ceil(number_of_brothers / float(brothers_count)))
     brothers = brothers[brothers_range_min:brothers_range_max]
+    brothers = convert_brothers_to_brotherentities(brothers)
     brother_list_list = utility.convert_array_to_YxZ(brothers, brothers_per_row) if len(brothers) > 0 else None
     page_numbers_list = calculate_page_range(total_pages, page_number)
     next_page = page_number + 1 if number_of_brothers > brothers_range_max else 0
@@ -56,6 +59,12 @@ def general_listing(request, isAlumniFilter, isPledgeFilter, name):
     c = Context(context_dict)
     t = loader.get_template('brothers_list.html')
     return HttpResponse(t.render(c))
+
+def convert_brothers_to_brotherentities(broList):
+    broEList = []
+    for bro in broList:
+        broEList.append(BrotherEntity(bro))
+    return broEList
 
 def get_brother_count(request):
     brothers_count = request.GET.get('count','9')

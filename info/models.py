@@ -36,12 +36,12 @@ class Brother(models.Model):
         return self.__unicode__()
      
 class Alumni(models.Model):
-    brother = models.ForeignKey(Brother)
-    currentJob = models.CharField(max_length=100)
-    currentCompany = models.CharField(max_length=150)
-    jobOnGraduation = models.CharField(max_length=100)
+    brother             = models.ForeignKey(Brother)
+    currentJob          = models.CharField(max_length=100)
+    currentCompany      = models.CharField(max_length=150)
+    jobOnGraduation     = models.CharField(max_length=100)
     companyOnGraduation = models.CharField(max_length=150)
-    email = models.EmailField()
+    email               = models.EmailField()
     
     def __unicode__(self):
         return str(self.brother)
@@ -91,3 +91,12 @@ class Officer(models.Model):
         return self.__unicode__()
     
     
+class BrotherEntity():
+    def __init__(self, brotherObj):
+        self.brother = brotherObj
+        hasMajors = HasMajor.objects.filter(brother = self.brother)
+        self.majors = []
+        for hasMajor in hasMajors:
+            self.majors.append(hasMajor.major)
+        
+        
