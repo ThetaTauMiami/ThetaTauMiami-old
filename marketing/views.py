@@ -22,3 +22,8 @@ def contact(request):
     t = loader.get_template('contact_us.html')
     c = Context({})
     return HttpResponse(t.render(c))
+
+def upcoming_page(request):
+    t = loader.get_template('upcoming.html')
+    c = Context({})
+    return HttpResponse(t.render(c))
