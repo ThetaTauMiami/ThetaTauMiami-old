@@ -13,9 +13,8 @@ def index(request):
     ael = []
     for a in article_list:
         ael.append(ArticleEntity(a))
-    nationals_pic = Picture.objects.filter(name='Crest')[0]
     article_numbers = range(1,len(ael) + 1) # +1 because of the nationals pic, starts at one because of first_ae
-    c = Context({'first_ae': ael[0], 'article_entity_list':ael[1:], 'nationals_pic': nationals_pic, 'article_numbers': article_numbers})
+    c = Context({'first_ae': ael[0], 'article_entity_list':ael[1:], 'article_numbers': article_numbers})
     return HttpResponse(t.render(c))
 
 def contact(request):
