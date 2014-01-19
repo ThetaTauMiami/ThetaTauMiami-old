@@ -6,7 +6,9 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     # Examples:
-    url(r'^$', 'marketing.views.index'),
+    url(r'^$', 'marketing.views.greetings'),
+    url(r'^splash/$', 'marketing.views.splash'),
+    url(r'^default/$', 'marketing.views.index'),
     url(r'^contact/$', 'marketing.views.contact'),
     url(r'^tools/$', 'marketing.views.upcoming_page'),
     url(r'^events/$', 'marketing.views.upcoming_page'),
