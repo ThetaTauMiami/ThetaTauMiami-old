@@ -2,7 +2,7 @@
 
 ## Requirements
 
-This website runs on Django and so it requires 
+This website runs on Django and it requires the following: 
 
 * Python 2.7
 * Django 1.6
