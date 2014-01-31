@@ -44,11 +44,16 @@ def alumni(request):
     return general_listing(request, True, False, 'Alumni')
 
 def general_listing(request, isAlumniFilter, isPledgeFilter, name):
+    '''
+    Retrieves all of the information necessary for each of the brother listings.
+    Retrieves information based on the isAlumniFilter and isPledgeFilter
+    '''
     brothers_count = get_brother_count(request)
     page_number = get_page_number(request)
     brothers_range_min = (page_number - 1) * brothers_count
     brothers_range_max = (page_number) * brothers_count
-    brothers = Brother.objects.filter(isAlumni=isAlumniFilter, isPledge=isPledgeFilter).order_by('lastName', 'firstName', 'middleName')
+    brothers = Brother.objects.filter(isAlumni=isAlumniFilter, isPledge=isPledgeFilter).order_by(
+        'lastName', 'firstName', 'middleName')
     number_of_brothers = len(brothers)
     total_pages = int(math.ceil(number_of_brothers / float(brothers_count)))
     brothers = brothers[brothers_range_min:brothers_range_max]
@@ -57,7 +62,14 @@ def general_listing(request, isAlumniFilter, isPledgeFilter, name):
     page_numbers_list = calculate_page_range(total_pages, page_number)
     next_page = page_number + 1 if number_of_brothers > brothers_range_max else 0
     prev_page = page_number - 1
-    context_dict = {'brotherType': name, 'brother_list_list' : brother_list_list, 'page_number' : page_number, 'prev_page': prev_page, 'next_page' : next_page, 'page_numbers' : page_numbers_list}
+    context_dict = {
+                    'brotherType': name, 
+                    'brother_list_list' : brother_list_list, 
+                    'page_number' : page_number, 
+                    'prev_page': prev_page, 
+                    'next_page' : next_page, 
+                    'page_numbers' : page_numbers_list
+                    }
     if brothers_count != standard_brothers_per_page:
         context_dict['brothers_count'] = brothers_count
     c = Context(context_dict)
@@ -65,13 +77,21 @@ def general_listing(request, isAlumniFilter, isPledgeFilter, name):
     return HttpResponse(t.render(c))
 
 def convert_brothers_to_brotherentities(broList):
+    '''
+    Converts a set of brothers and converts them to brother entities 
+    which contain more information
+    '''
     broEList = []
     for bro in broList:
         broEList.append(BrotherEntity(bro))
     return broEList
 
 def get_brother_count(request):
-    brothers_count = request.GET.get('count','9')
+    '''
+    Finds the requested number of brothers and corrects it if there are any issues
+    If the number is invalid, it will return standard_brothers_per_page
+    '''
+    brothers_count = request.GET.get('count',str(standard_brothers_per_page))
     try:
         brothers_count = int(brothers_count)
         if brothers_count > max_brothers_per_page:
@@ -81,6 +101,10 @@ def get_brother_count(request):
     return brothers_count
 
 def get_page_number(request):
+    '''
+    Finds the page number and corrects it if there are any issues
+    If the page number is invalid, it will return 1
+    '''
     page_number = request.GET.get('page','1')
     try:
         page_number = int(page_number)
@@ -91,6 +115,11 @@ def get_page_number(request):
     return page_number
 
 def calculate_page_range(total_pages, page_number):
+    '''
+    This determines which page numbers to show at the bottom of the brothers list pages.
+    It returns a list of integers that should be displayed on the page based on the total
+    number of pages and the current page number.
+    '''
     if total_pages == 1: # If there is only the one page, there is no need to display page numbers
         return []
     elif total_pages <= max_pages_listed_on_screen: # In this case, just display all of the available pages
