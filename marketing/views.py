@@ -7,6 +7,7 @@ from django.http.response import HttpResponseRedirect
 from articles.models import Article, ArticleEntity
 from marketing.models import Picture
 
+
 # Create your views here.
 def index(request):
     t = loader.get_template('index.html')

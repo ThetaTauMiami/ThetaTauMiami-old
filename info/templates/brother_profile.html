@@ -20,6 +20,16 @@
         </div>
 
         <div class="col-md-4">
+          <h2>
+	          {% if be.brother.isPledge %}
+	          	Pledge
+	          {% elif be.brother.isAlumni %}
+	          	Alumni
+	          {% else %}
+	          	Active
+	          {% endif %}
+	          | Class of {{ be.brother.graduationYear }}
+          </h2>
           <h3>Bio</h3>
           <p>{{ be.brother.bio }}</p>
           <h3>Major(s)</h3>
@@ -32,6 +42,7 @@
             	<li> Undecided Engineering </li>
             {% endif %}
           </ul>
+          <h4><a href="{{ be.brother.resume }}">Resume</a></h4>
         </div>
 
       </div>
