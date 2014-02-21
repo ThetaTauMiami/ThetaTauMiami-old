@@ -9,19 +9,12 @@ This website runs on Django and it requires the following:
 * dj_static
 * dj_database
 * django-htmlmin
-* BigLittlePairing
 
 If you are running this locally on a Unix-based machine (Linux, Mac OS X) these can be installed via pip
 
 Run the following commands at the shell
 
     sudo pip install django dj_database dj_static django-htmlmin
-    
-and clone the repository for BigLittlePairing
-
-	git clone https://github.com/rogerskw/BigLittlePairing.git
-	
-and configure your project to reference the BigLittlePairing project.
 
 The project should be able to be run locally by running
 
