@@ -7,6 +7,7 @@ from django.shortcuts import render, get_object_or_404
 from info.models import Brother, Officer, BrotherEntity
 from info import utility
 from marketing.models import Picture as MarketingPic
+from articles.models import Article
 
 max_brothers_per_page = 24
 standard_brothers_per_page = 9
@@ -20,7 +21,8 @@ def index(request):
     t = loader.get_template('about.html')
     officer_list = Officer.objects.filter().order_by('ordering')
     group_pic = MarketingPic.objects.filter(name='Group')[0]
-    c = Context({'officer_list': officer_list, 'group_pic': group_pic})
+    recent_events = Article.objects.all().order_by('-date')[:6]
+    c = Context({'officer_list': officer_list, 'group_pic': group_pic, 'articles': recent_events})
     return HttpResponse(t.render(c))
 
 def brother_profile(request, brother_id):
