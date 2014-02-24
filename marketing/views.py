@@ -32,8 +32,9 @@ def upcoming_page(request):
 def splash(request):
     t = loader.get_template('splash.html')
     c = Context({})
-    return HttpResponse(t.render(c))
+#    return HttpResponse(t.render(c))
+    return HttpResponseRedirect('/default/')
 
 def greetings(request):
-    return HttpResponseRedirect('/splash/')
+    return HttpResponseRedirect('/default/')
     
