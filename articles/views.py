@@ -3,7 +3,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from django.template import Context, loader
 
-from articles.models import Article, ArticleEntity
+from articles.models import Article, ArticleEntity, Gallery, InGallery, Picture
 
 def index(request):
     t = loader.get_template('article_list.html')
@@ -30,4 +30,9 @@ def social(request):
 
 def get_article(request, article_id):
     art = get_object_or_404(Article, pk=article_id)
-    return render(request, 'article.html', {'article_entity': ArticleEntity(art)})
+    gal_id = art.gallery.id
+    in_gals = InGallery.objects.filter(gallery=gal_id)
+    pics = set()
+    for in_gal in in_gals:
+        pics.add(in_gal.image)
+    return render(request, 'article.html', {'article_entity': ArticleEntity(art), 'pictures': pics})

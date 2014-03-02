@@ -45,6 +45,15 @@
 
           <hr>          
         </div>
+        <div>
+        	{% for pic in pictures %}
+        		<div class="row">
+        			<div class="col-lg-8">
+        				<img src="{{ pic.image }}" />
+        			</div>
+        		</div>
+        	{% endfor %}
+        </div>
 	</div><!-- /.container -->
 
 {% endblock %}
