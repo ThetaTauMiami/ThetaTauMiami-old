@@ -43,18 +43,20 @@
           <p> {{ para }} </p>
           {% endfor %}
 
-          <hr>          
-        </div>
-        <div id="album">
+          <hr />
+          <div id="album">
+       		<div class="row">
         	{% for pic in pictures %}
-        		<div class="row">
-        			<div class="col-lg-8">
-        				<a class="fancybox" href="{{ pic.image }}"><img src="{{ pic.image }}" class="img-responsive" /></a>
-        				<br />
-        			</div>
-        		</div>
+       			<div class="col-sm-3">
+       				<a class="fancybox" href="{{ pic.image }}"><img src="{{ pic.image }}" class="img-responsive" /></a>
+       				<br />
+       			</div>
         	{% endfor %}
+        	</div>
+          </div>
+          <hr />          
         </div>
+
       </div>
         <style type="text/css">
             .hidden{
