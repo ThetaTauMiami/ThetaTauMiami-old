@@ -45,16 +45,41 @@
 
           <hr>          
         </div>
-        <div>
+        <div id="album">
         	{% for pic in pictures %}
         		<div class="row">
         			<div class="col-lg-8">
-        				<img src="{{ pic.image }}" class="img-responsive" />
+        				<a class="fancybox" href="{{ pic.image }}"><img src="{{ pic.image }}" class="img-responsive" /></a>
         				<br />
         			</div>
         		</div>
         	{% endfor %}
         </div>
+      </div>
+        <style type="text/css">
+            .hidden{
+                display: none;
+            }
+        </style>
+        <div id="js">
+            <script type="text/javascript">
+                $(document).ready(function() {
+                    $(".fancybox").fancybox();
+                });
+            </script>
+            <script type="text/javascript">
+                $(document).ready(
+                    fancy()
+                );
+                function fancy()    {
+                    $(".fancybox")
+                        .attr('rel', 'gallery')
+                        .fancybox({
+                            padding : 0
+                    });
+                }
+            </script>
+        </div> 
 	</div><!-- /.container -->
 
 {% endblock %}
