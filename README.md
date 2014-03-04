@@ -18,7 +18,7 @@ Install pip with
 
 Run the following commands at the shell
 
-    sudo pip install django dj-database-url dj-static django-htmlmin
+    sudo pip install django dj_database_url dj_static django-htmlmin
 
 The project should be able to be run locally by running
 
