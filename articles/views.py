@@ -13,26 +13,22 @@ def index(request):
     c = Context({'eventType': 'All', 'article_list': article_list})
     return HttpResponse(t.render(c))
  
-def service(request):
-    type_id = ArticleCategory.objects.filter(name="Service")[0].id
+def general_listing(request, eventType, category):
+    type_id = ArticleCategory.objects.filter(name=category)[0].id
     t = loader.get_template('article_list.html')
     article_list = Article.objects.filter(category=type_id)
-    c = Context({'eventType': 'Service', 'article_list': article_list})
+    c = Context({'eventType': eventType, 'article_list': article_list})
     return HttpResponse(t.render(c))
+    
+ 
+def service(request):
+    return general_listing(request, 'Service', 'Service')
 
 def professional_development(request):
-    type_id = ArticleCategory.objects.filter(name="PD")[0].id
-    t = loader.get_template('article_list.html')
-    article_list = Article.objects.filter(category=type_id)
-    c = Context({'eventType': 'Professional Development', 'article_list': article_list})
-    return HttpResponse(t.render(c))
+    return general_listing(request, 'Professional Development', 'PD')
 
 def social(request):
-    type_id = ArticleCategory.objects.filter(name="Social")[0].id
-    t = loader.get_template('article_list.html')
-    article_list = Article.objects.filter(category=type_id)
-    c = Context({'eventType': 'Social', 'article_list': article_list})
-    return HttpResponse(t.render(c))
+    return general_listing(request, 'Social', 'Social')
 
 def get_article(request, article_id):
     art = get_object_or_404(Article, pk=article_id)
