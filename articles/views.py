@@ -3,7 +3,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from django.template import Context, loader
 
-from articles.models import Article, ArticleEntity, Gallery, InGallery, Picture
+from articles.models import Article, ArticleCategory, ArticleEntity, Gallery, InGallery, Picture
 
 def index(request):
     t = loader.get_template('article_list.html')
@@ -14,18 +14,24 @@ def index(request):
     return HttpResponse(t.render(c))
  
 def service(request):
+    type_id = ArticleCategory.objects.filter(name="Service")[0].id
     t = loader.get_template('article_list.html')
-    c = Context({'eventType': 'Service'})
+    article_list = Article.objects.filter(category=type_id)
+    c = Context({'eventType': 'Service', 'article_list': article_list})
     return HttpResponse(t.render(c))
 
 def professional_development(request):
+    type_id = ArticleCategory.objects.filter(name="PD")[0].id
     t = loader.get_template('article_list.html')
-    c = Context({'eventType': 'Professional Development'})
+    article_list = Article.objects.filter(category=type_id)
+    c = Context({'eventType': 'Professional Development', 'article_list': article_list})
     return HttpResponse(t.render(c))
 
 def social(request):
+    type_id = ArticleCategory.objects.filter(name="Social")[0].id
     t = loader.get_template('article_list.html')
-    c = Context({'eventType': 'Social'})
+    article_list = Article.objects.filter(category=type_id)
+    c = Context({'eventType': 'Social', 'article_list': article_list})
     return HttpResponse(t.render(c))
 
 def get_article(request, article_id):
