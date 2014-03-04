@@ -10,20 +10,14 @@ from listing.pages import PageHelper
 default_count_per_page = 5
 max_count_per_page = 25
 max_pages_listed_on_screen = 5
-
-
-def index(request):
-    t = loader.get_template('article_list.html')
-    article_list = Article.objects.all().order_by('date').reverse()
-    if len(article_list) == 0:
-        article_list = None
-    c = Context({'eventType': 'All', 'article_list': article_list})
-    return HttpResponse(t.render(c))
  
 def general_listing(request, eventType, category):
-    type_id = ArticleCategory.objects.filter(name=category)[0].id
     t = loader.get_template('article_list.html')
-    article_list = Article.objects.filter(category=type_id)
+    if category != None:
+        type_id = ArticleCategory.objects.filter(name=category)[0].id
+        article_list = Article.objects.filter(category=type_id).order_by('date').reverse()
+    else:
+        article_list = Article.objects.all().order_by('date').reverse()
     article_count = PageHelper.get_request_count(request, default_count_per_page, max_count_per_page)
     page_number = PageHelper.get_page_number(request)
     articles_range_min = (page_number - 1) * article_count
@@ -44,7 +38,9 @@ def general_listing(request, eventType, category):
                     }
     c = Context(context_dict)
     return HttpResponse(t.render(c))
-    
+
+def index(request):
+    return general_listing(request, 'All', None)    
  
 def service(request):
     return general_listing(request, 'Service', 'Service')
