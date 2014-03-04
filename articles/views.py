@@ -30,7 +30,8 @@ def general_listing(request, eventType, category):
     prev_page = page_number - 1
     context_dict = {
                     'eventType': eventType,
-                    'article_list' : article_list, 
+                    'article_list' : article_list,
+                    'article_count': article_count, 
                     'page_number' : page_number, 
                     'prev_page': prev_page, 
                     'next_page' : next_page, 

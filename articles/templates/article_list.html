@@ -51,8 +51,8 @@
           	{% if prev_page == 0 %}
           	
           	{% else %}
-	           	{% if brothers_count %}
-	           		<li><a href="?page={{ prev_page }}&count={{ brothers_count }}">&laquo;</a></li>
+	           	{% if article_count %}
+	           		<li><a href="?page={{ prev_page }}&count={{ article_count }}">&laquo;</a></li>
 	           	{% else %}
 	           		<li><a href="?page={{ prev_page }}">&laquo;</a></li>
 	           	{% endif %}
@@ -61,8 +61,8 @@
             	{% if page_number == i %}
             		<li class="active"><a href="#">{{ page_number }}</a></li>
             	{% else %}
-	            	{% if brothers_count %}
-	            		<li><a href="?page={{ i }}&count={{ brothers_count }}">{{ i }}</a></li>
+	            	{% if article_count %}
+	            		<li><a href="?page={{ i }}&count={{ article_count }}">{{ i }}</a></li>
 	            	{% else %}
 	            		<li><a href="?page={{ i }}">{{ i }}</a></li>
 	            	{% endif %}
@@ -71,8 +71,8 @@
             {% if next_page == 0 %}
             
             {% else %}
-	           	{% if brothers_count %}
-	           		<li><a href="?page={{ next_page }}&count={{ brothers_count }}">&raquo;</a></li>
+	           	{% if article_count %}
+	           		<li><a href="?page={{ next_page }}&count={{ article_count }}">&raquo;</a></li>
 	           	{% else %}
 	           		<li><a href="?page={{ next_page }}">&raquo;</a></li>
 	           	{% endif %}
