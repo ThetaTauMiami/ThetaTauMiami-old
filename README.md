@@ -12,6 +12,10 @@ This website runs on Django and it requires the following:
 
 If you are running this locally on a Unix-based machine (Linux, Mac OS X) these can be installed via pip
 
+Install pip with
+	
+	sudo easy_install pip
+
 Run the following commands at the shell
 
     sudo pip install django dj_database dj_static django-htmlmin
