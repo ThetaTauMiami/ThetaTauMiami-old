@@ -37,4 +37,10 @@ def splash(request):
 
 def greetings(request):
     return HttpResponseRedirect('/default/')
+
+def calendar(request):
+    t = loader.get_template('calendar.html')
+    c = Context({})
+    return HttpResponse(t.render(c))
+    
     
