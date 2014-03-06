@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %} &Theta;&Tau; | Resumes {% endblock %}
+
+{% block content %}
+    <div class="container">
+
+      <div class="row">
+
+        <div class="col-lg-12">
+          <h1 class="page-header">Resumes</h1>
+        </div>
+
+      </div> 
+    
+       <div class="container">
+       		<form method='GET' name='submit'>
+       			
+       			<div class='row'>
+<!--        				<div class='col-sm-2'>
+	       				Majors: <br />
+	       				{% for major in majors %}
+	       				<input type='checkbox' name='major' value='{{ major.majorName }}'>{{ major.majorName }}<br />
+	       				{% endfor %}
+       				</div> -->
+       				<div class='col-sm-2'>
+       					Graduation Years: <br />
+       					{% for year in years %}
+	       				<input type='checkbox' name='gradyear' value='{{ year }}'>{{ year }}<br />
+	       				{% endfor %}
+	       			</div>
+  				</div>
+  				<div class='row'>
+  					<div class='col-lg-8'><input type='submit' value='Go' /></div>
+  				</div>
+  				
+       				
+       		</form>
+       		
+    	</div>
+    	<hr />
+    	<div class='container'>
+
+  		   <div class="row">
+
+			{% for brother in brothers %}
+		
+			<a href='{{ brother.resume }}'>{{ brother.lastName }}, {{ brother.firstName }} {{ brother.middleName }}</a> <br />
+		
+			{% endfor %}
+
+     	   </div>
+
+       <hr />
+
+    </div><!-- /.container -->
+
+{% endblock %}
