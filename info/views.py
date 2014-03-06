@@ -1,10 +1,12 @@
 import math
+from datetime import date
 
 from django.http import HttpResponse
 from django.template import Context, loader
 from django.shortcuts import render, get_object_or_404
+from django.db.models import Q
 
-from info.models import Brother, Officer, BrotherEntity
+from info.models import Brother, Officer, BrotherEntity, Major
 from info import utility
 from marketing.models import Picture as MarketingPic
 from articles.models import Article
@@ -77,6 +79,21 @@ def general_listing(request, isAlumniFilter, isPledgeFilter, name):
         context_dict['brothers_count'] = brothers_count
     c = Context(context_dict)
     t = loader.get_template('brothers_list.html')
+    return HttpResponse(t.render(c))
+
+def resumes(request):
+    year = date.today().year
+    years = []
+    for i in xrange(5):
+        years.append(year+i)
+    grad_year_requests = request.GET.getlist('gradyear')
+    reqs = Q()
+    for grad_year_request in grad_year_requests:
+        reqs = reqs | Q(graduationYear=int(grad_year_request))
+    brothers = Brother.objects.filter(reqs).order_by('lastName', 'firstName', 'middleName')
+    majors = Major.objects.all().order_by('majorName')
+    c = Context({'brothers': brothers, 'majors': majors, 'years': years})
+    t = loader.get_template('resume_list.html')
     return HttpResponse(t.render(c))
 
 def convert_brothers_to_brotherentities(broList):
