@@ -90,6 +90,26 @@ class Officer(models.Model):
     def __str__(self):
         return self.__unicode__()
     
+class Position(models.Model):
+    name = models.CharField(max_length=50)
+    
+    def __unicode__(self):
+        return self.name
+    
+    def __str__(self):
+        return self.__unicode__()    
+    
+class HeldPosition(models.Model):
+    brother     = models.ForeignKey(Brother)
+    position    = models.ForeignKey(Position)
+    year        = models.IntegerField()
+    semester    = models.CharField(max_length=50)
+    
+    def __unicode__(self):
+        return " ".join([str(self.year), self.semester, str(self.brother), str(self.position)])
+    
+    def __str__(self):
+        return self.__unicode__()
     
 class BrotherEntity():
     def __init__(self, brotherObj):
