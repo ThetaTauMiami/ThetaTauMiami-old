@@ -1,11 +1,9 @@
-from django.shortcuts import render
 from django.template import Context, loader
 
 from django.http import HttpResponse
 from django.http.response import HttpResponseRedirect
 
 from articles.models import Article, ArticleEntity
-from marketing.models import Picture
 
 
 # Create your views here.
@@ -30,8 +28,8 @@ def upcoming_page(request):
     return HttpResponse(t.render(c))
 
 def splash(request):
-    t = loader.get_template('splash.html')
-    c = Context({})
+#    t = loader.get_template('splash.html')
+#    c = Context({})
 #    return HttpResponse(t.render(c))
     return HttpResponseRedirect('/default/')
 
