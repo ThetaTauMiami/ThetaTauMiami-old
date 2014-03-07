@@ -6,7 +6,7 @@ from django.template import Context, loader
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Q
 
-from info.models import Brother, Officer, BrotherEntity, Major
+from info.models import Brother, Officer, BrotherEntity, Major, Job
 from info import utility
 from marketing.models import Picture as MarketingPic
 from articles.models import Article
@@ -95,6 +95,10 @@ def resumes(request):
     c = Context({'brothers': brothers, 'majors': majors, 'years': years})
     t = loader.get_template('resume_list.html')
     return HttpResponse(t.render(c))
+
+def careers(request):
+    jobs = Job.objects.all()
+    return render(request, 'careers.html', {'jobs': jobs})
 
 def convert_brothers_to_brotherentities(broList):
     '''

@@ -55,6 +55,29 @@ class Brother(models.Model):
     def __str__(self):
         return self.__unicode__()
      
+    
+class JobType(models.Model):
+    name = models.CharField(max_length=50)
+    
+    def __unicode__(self):
+        return self.name
+    
+    def __str__(self):
+        return self.__unicode__()    
+
+class Job(models.Model):
+    type = models.ForeignKey(JobType)
+    company = models.CharField(max_length=100)
+    title = models.CharField(max_length=100)
+    brother = models.ForeignKey(Brother)
+    year = models.IntegerField()
+    
+    def __unicode__(self):
+        return " - ".join([str(self.year), str(self.brother.lastName + ", " + self.brother.firstName), self.company, self.title, str(self.type)])
+    
+    def __str__(self):
+        return self.__unicode__()
+     
 class Alumni(models.Model):
     brother             = models.ForeignKey(Brother)
     currentJob          = models.CharField(max_length=100, blank=True)
