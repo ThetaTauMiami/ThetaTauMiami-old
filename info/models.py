@@ -13,41 +13,6 @@ class PledgeClass(models.Model):
     
     def __str__(self):
         return self.__unicode__()
-    
-class Brother(models.Model):
-    firstName       = models.CharField(max_length=50)
-    middleName      = models.CharField(max_length=50)
-    lastName        = models.CharField(max_length=50)
-    pledgeClass     = models.ForeignKey(PledgeClass)
-    uniqueId        = models.CharField(max_length=10)
-    graduationYear  = models.CharField(max_length=4)
-    isAlumni        = models.BooleanField()
-    isPledge        = models.BooleanField()
-    phone           = models.CharField(max_length=15)
-    picture         = models.URLField()
-    resume          = models.URLField()
-    address         = models.CharField(max_length=200)
-    bio             = models.CharField(max_length=500)
-    
-    def __unicode__(self):
-        return str(self.pledgeClass) + " - " + self.lastName + ", " + self.firstName + " " + self.middleName
-    
-    def __str__(self):
-        return self.__unicode__()
-     
-class Alumni(models.Model):
-    brother             = models.ForeignKey(Brother)
-    currentJob          = models.CharField(max_length=100)
-    currentCompany      = models.CharField(max_length=150)
-    jobOnGraduation     = models.CharField(max_length=100)
-    companyOnGraduation = models.CharField(max_length=150)
-    email               = models.EmailField()
-    
-    def __unicode__(self):
-        return str(self.brother)
-    
-    def __str__(self):
-        return self.__unicode__()
      
 class Department(models.Model):
     abbrev  = models.CharField(max_length=3)
@@ -57,7 +22,7 @@ class Department(models.Model):
     
     def __str__(self):
         return self.__unicode__()
-       
+    
 class Major(models.Model):
     department  = models.ForeignKey(Department)
     majorName   = models.CharField(max_length=50)
@@ -67,25 +32,39 @@ class Major(models.Model):
     
     def __str__(self):
         return self.__unicode__()
-
-class HasMajor(models.Model):
-    brother = models.ForeignKey(Brother)
-    major   = models.ForeignKey(Major)
+    
+class Brother(models.Model):
+    firstName       = models.CharField(max_length=50)
+    middleName      = models.CharField(max_length=50, blank=True)
+    lastName        = models.CharField(max_length=50)
+    pledgeClass     = models.ForeignKey(PledgeClass)
+    uniqueId        = models.CharField(max_length=10)
+    graduationYear  = models.CharField(max_length=4)
+    isAlumni        = models.BooleanField()
+    isPledge        = models.BooleanField()
+    phone           = models.CharField(max_length=15, blank=True)
+    picture         = models.URLField()
+    resume          = models.URLField()
+    address         = models.CharField(max_length=200, blank=True)
+    bio             = models.CharField(max_length=500, blank=True)
+    majors          = models.ManyToManyField(Major, null=True)
     
     def __unicode__(self):
-        return str(self.brother) + " - " + str(self.major)
+        return str(self.pledgeClass) + " - " + self.lastName + ", " + self.firstName + " " + self.middleName
     
     def __str__(self):
         return self.__unicode__()
-    
-class Officer(models.Model):
-    brother  = models.ForeignKey(Brother)
-    position = models.CharField(max_length=50)
-    ordering = models.IntegerField() # Represents the order it appears on the page - ties have no guarantee on how they will be ordered
-    overview = models.CharField(max_length=500)
+     
+class Alumni(models.Model):
+    brother             = models.ForeignKey(Brother)
+    currentJob          = models.CharField(max_length=100, blank=True)
+    currentCompany      = models.CharField(max_length=150, blank=True)
+    jobOnGraduation     = models.CharField(max_length=100, blank=True)
+    companyOnGraduation = models.CharField(max_length=150, blank=True)
+    email               = models.EmailField(blank=True)
     
     def __unicode__(self):
-        return self.position
+        return str(self.brother)
     
     def __str__(self):
         return self.__unicode__()
@@ -111,12 +90,25 @@ class HeldPosition(models.Model):
     def __str__(self):
         return self.__unicode__()
     
+class Officer(models.Model):
+    brother  = models.ForeignKey(Brother)
+    position = models.ForeignKey(Position)
+    ordering = models.IntegerField() # Represents the order it appears on the page - ties have no guarantee on how they will be ordered
+    overview = models.CharField(max_length=500, blank=True)
+    
+    def __unicode__(self):
+        return " ".join([str(self.position),str(self.brother)])
+    
+    def __str__(self):
+        return self.__unicode__()
+    
 class BrotherEntity():
     def __init__(self, brotherObj):
         self.brother = brotherObj
-        hasMajors = HasMajor.objects.filter(brother = self.brother)
-        self.majors = []
-        for hasMajor in hasMajors:
-            self.majors.append(hasMajor.major)
+        heldPosition = HeldPosition.objects.filter(brother = self.brother)
+        heldPositions = []
+        self.heldPositions = []
+        for heldPosition in heldPositions:
+            self.majors.append(heldPosition.position)
         
         

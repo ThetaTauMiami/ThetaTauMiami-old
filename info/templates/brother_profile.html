@@ -34,8 +34,8 @@
           <p>{{ be.brother.bio }}</p>
           <h3>Major(s)</h3>
           <ul>
-          	{% if be.majors %}
-            {% for major in be.majors %}
+          	{% if be.brother.majors %}
+            {% for major in be.brother.majors.all %}
             	<li> {{ major.majorName }} </li>
             {% endfor %}
             {% else %}

@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.template import Context, loader
 import math
 
-from articles.models import Article, ArticleCategory, ArticleEntity, Gallery, InGallery, Picture
+from articles.models import Article, ArticleCategory, ArticleEntity, Gallery, Picture
 from listing.pages import PageHelper
 
 default_count_per_page = 5
@@ -54,9 +54,4 @@ def social(request):
 
 def get_article(request, article_id):
     art = get_object_or_404(Article, pk=article_id)
-    gal_id = art.gallery.id
-    in_gals = InGallery.objects.filter(gallery=gal_id)
-    pics = set()
-    for in_gal in in_gals:
-        pics.add(in_gal.image)
-    return render(request, 'article.html', {'article_entity': ArticleEntity(art), 'pictures': pics})
+    return render(request, 'article.html', {'article_entity': ArticleEntity(art), 'pictures': art.gallery.pictures.all })
