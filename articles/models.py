@@ -11,10 +11,10 @@ from info.models import Brother
 class Picture(models.Model):
 #    image       = models.ImageField(storage=FileSystemStorage(location=settings.MEDIA_ROOT), upload_to="articles/pictures/")
     image       = models.URLField()
-    alt_text    = models.CharField(max_length=200)
-    subtitle    = models.CharField(max_length=500)
-    title       = models.CharField(max_length=250)
-    date        = models.DateField()
+    alt_text    = models.CharField(max_length=200, blank=True)
+    subtitle    = models.CharField(max_length=500, blank=True)
+    title       = models.CharField(max_length=250, blank=True)
+    date        = models.DateField(null=True)
     
     def __unicode__(self):
         return str(self.date) + " " + self.title
@@ -24,19 +24,10 @@ class Picture(models.Model):
     
 class Gallery(models.Model):
     name = models.CharField(max_length=100)
+    pictures = models.ManyToManyField(Picture, null=True)
     
     def __unicode__(self):
         return self.name
-    
-    def __str__(self):
-        return self.__unicode__()
-    
-class InGallery(models.Model):
-    image   = models.ForeignKey(Picture)
-    gallery = models.ForeignKey(Gallery)
-    
-    def __unicode__(self):
-        return str(self.gallery) + " - " + str(self.image)
     
     def __str__(self):
         return self.__unicode__()
