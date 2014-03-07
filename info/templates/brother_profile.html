@@ -30,8 +30,6 @@
 	          {% endif %}
 	          | Class of {{ be.brother.graduationYear }}
           </h2>
-          <h3>Bio</h3>
-          <p>{{ be.brother.bio }}</p>
           <h3>Major(s)</h3>
           <ul>
           	{% if be.brother.majors %}
@@ -42,6 +40,22 @@
             	<li> Undecided Engineering </li>
             {% endif %}
           </ul>
+          {% if be.positions %}
+          <h3>Leadership Positions in &Theta;&Tau;</h3>
+          <ul>
+          	{% for position in be.positions %}
+          	<li>{{ position.position.name }} ({{ position.semester }} {{ position.year }}) </li>
+          	{% endfor %}
+          </ul>
+          {% endif %}
+          {% if be.jobs %}
+          <h3>Internships, Co-ops, and Full Time Positions</h3>
+          <ul>
+          	{% for job in be.jobs %}
+          	<li>{{ job.type.name }} - {{ job.title }} at {{ job.company }} ({{ job.year }})</li>
+          	{% endfor %}
+          </ul>
+          {% endif %}
           <h4><a href="{{ be.brother.resume }}">Resume</a></h4>
         </div>
 

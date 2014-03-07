@@ -128,10 +128,11 @@ class Officer(models.Model):
 class BrotherEntity():
     def __init__(self, brotherObj):
         self.brother = brotherObj
-        heldPosition = HeldPosition.objects.filter(brother = self.brother)
-        heldPositions = []
-        self.heldPositions = []
+        heldPositions = HeldPosition.objects.filter(brother = self.brother.id)
+        retrievedJobs = Job.objects.filter(brother = self.brother.id)
+        self.positions = []
         for heldPosition in heldPositions:
-            self.majors.append(heldPosition.position)
-        
-        
+            self.positions.append(heldPosition)
+        self.jobs = []
+        for job in retrievedJobs:
+            self.jobs.append(job)
