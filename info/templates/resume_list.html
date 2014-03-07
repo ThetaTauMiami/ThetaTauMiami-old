@@ -44,8 +44,16 @@
   		   <div class="row">
 
 			{% for brother in brothers %}
-		
-			<a href='{{ brother.resume }}'>{{ brother.lastName }}, {{ brother.firstName }} {{ brother.middleName }}</a> <br />
+			<div class='col-md-2'>
+				<a href='{{ brother.resume }}'>{{ brother.lastName }}, {{ brother.firstName }} {{ brother.middleName }}</a> 
+			</div>
+				{% for major in brother.majors.all %}
+				<div class='col-md-2'>
+					{{ major }}
+				</div>
+				{% endfor %}
+			
+			<br />
 		
 			{% endfor %}
 
