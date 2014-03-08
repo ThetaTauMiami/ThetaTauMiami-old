@@ -49,8 +49,8 @@ def service(request):
 def professional_development(request):
     return general_listing(request, 'Professional Development', 'PD')
 
-def social(request):
-    return general_listing(request, 'Social', 'Social')
+def brotherhood(request):
+    return general_listing(request, 'Brotherhood', 'Brotherhood')
 
 def get_article(request, article_id):
     art = get_object_or_404(Article, pk=article_id)
