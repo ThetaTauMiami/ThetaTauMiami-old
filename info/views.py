@@ -83,9 +83,7 @@ def general_listing(request, isAlumniFilter, isPledgeFilter, name):
 
 def resumes(request):
     year = date.today().year
-    years = []
-    for i in xrange(5):
-        years.append(year+i)
+    years = range(year, year+5)
     grad_year_requests = request.GET.getlist('gradyear')
     major_requests = request.GET.getlist('major')
     grad_year_reqs = Q()
@@ -101,7 +99,7 @@ def resumes(request):
     return HttpResponse(t.render(c))
 
 def careers(request):
-    jobs = Job.objects.all()
+    jobs = Job.objects.all().order_by('-year')
     return render(request, 'careers.html', {'jobs': jobs})
 
 def convert_brothers_to_brotherentities(broList):
