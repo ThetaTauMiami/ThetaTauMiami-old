@@ -27,9 +27,9 @@
           </div>
           <h3><a href="/info/brother/{{ bro_entity.brother.id }}">{{ bro_entity.brother.firstName }} {{ bro_entity.brother.lastName }}</a></h3>
           <p>Pledge Class: {{ bro_entity.brother.pledgeClass.name }}</p>
-         	{% if bro_entity.majors %}
+         	{% if bro_entity.brother.majors.all %}
          	
-         	{% for major in bro_entity.majors %}
+         	{% for major in bro_entity.brother.majors.all %}
          		<div>{{ major.majorName }}&#x0020; </div>
          	{% endfor %}
          	
