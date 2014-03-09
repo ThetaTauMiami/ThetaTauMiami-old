@@ -128,8 +128,8 @@ class Officer(models.Model):
 class BrotherEntity():
     def __init__(self, brotherObj):
         self.brother = brotherObj
-        heldPositions = HeldPosition.objects.filter(brother = self.brother.id)
-        retrievedJobs = Job.objects.filter(brother = self.brother.id)
+        heldPositions = HeldPosition.objects.filter(brother = self.brother.id).order_by('-year')
+        retrievedJobs = Job.objects.filter(brother = self.brother.id).order_by('-year')
         self.positions = []
         for heldPosition in heldPositions:
             self.positions.append(heldPosition)
