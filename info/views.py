@@ -30,6 +30,8 @@ def index(request):
 
 def brother_profile(request, brother_id):
     bro = get_object_or_404(Brother, pk = brother_id)
+    if bro.resume.startswith('http://google.com'):
+        bro.resume = ""
     return render(request, 'brother_profile.html', {'be': BrotherEntity(bro)})
 
 def officers(request):
