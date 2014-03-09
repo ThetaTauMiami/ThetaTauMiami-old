@@ -93,7 +93,7 @@ def resumes(request):
     for major_request in major_requests:
         major_reqs = major_reqs | Q(majors__majorName=major_request)
     valid_resume_Q = ~Q(resume__startswith = 'http://google.com/')
-    brothers = Brother.objects.filter(major_reqs, grad_year_reqs, valid_resume_Q).order_by('lastName', 'firstName', 'middleName')
+    brothers = Brother.objects.filter(major_reqs, grad_year_reqs, valid_resume_Q).order_by('lastName', 'firstName', 'middleName').distinct()
     majors = Major.objects.all().order_by('majorName')
     c = Context({'brothers': brothers, 'majors': majors, 'years': years})
     t = loader.get_template('resume_list.html')
