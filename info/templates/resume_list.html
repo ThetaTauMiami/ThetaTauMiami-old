@@ -42,29 +42,29 @@
     	<hr />
     	<div class='container'>
 
-  		   <div class="row">
 
 			{% for brother in brothers %}
-			<div class='col-md-2'>
-				<a href='/info/brother/{{ brother.id }}'>{{ brother.lastName }}, {{ brother.firstName }} {{ brother.middleName }}</a> 
-			</div>
-			<div class='col-md-2'>
-				Class of {{ brother.graduationYear }}
-			</div>
-			<div class='col-md-2'>
-				<a href='{{ brother.resume }}'>Resume</a>
-			</div>
-				{% for major in brother.majors.all %}
+				{% if brother.resume %}
+				<div class="row">
 				<div class='col-md-2'>
-					{{ major }}
+					<a href='/info/brother/{{ brother.id }}'>{{ brother.lastName }}, {{ brother.firstName }} {{ brother.middleName }}</a> 
 				</div>
-				{% endfor %}
-			
-			<br />
-			<hr />
+				<div class='col-md-2'>
+					Class of {{ brother.graduationYear }}
+				</div>
+				<div class='col-md-2'>
+					<a href='{{ brother.resume }}'>Resume</a>
+				</div>
+					{% for major in brother.majors.all %}
+					<div class='col-md-2'>
+						{{ major }}
+					</div>
+					{% endfor %}
+				
+				</div>
+				<hr />
+				{% endif %}
 			{% endfor %}
-
-     	   </div>
 
        <hr />
        </div>
