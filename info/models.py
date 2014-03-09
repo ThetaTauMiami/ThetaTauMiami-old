@@ -55,6 +55,29 @@ class Brother(models.Model):
     def __str__(self):
         return self.__unicode__()
      
+    
+class JobType(models.Model):
+    name = models.CharField(max_length=50)
+    
+    def __unicode__(self):
+        return self.name
+    
+    def __str__(self):
+        return self.__unicode__()    
+
+class Job(models.Model):
+    type = models.ForeignKey(JobType)
+    company = models.CharField(max_length=100)
+    title = models.CharField(max_length=100)
+    brother = models.ForeignKey(Brother)
+    year = models.IntegerField()
+    
+    def __unicode__(self):
+        return " - ".join([str(self.year), str(self.brother.lastName + ", " + self.brother.firstName), self.company, self.title, str(self.type)])
+    
+    def __str__(self):
+        return self.__unicode__()
+     
 class Alumni(models.Model):
     brother             = models.ForeignKey(Brother)
     currentJob          = models.CharField(max_length=100, blank=True)
@@ -105,10 +128,11 @@ class Officer(models.Model):
 class BrotherEntity():
     def __init__(self, brotherObj):
         self.brother = brotherObj
-        heldPosition = HeldPosition.objects.filter(brother = self.brother)
-        heldPositions = []
-        self.heldPositions = []
+        heldPositions = HeldPosition.objects.filter(brother = self.brother.id).order_by('-year')
+        retrievedJobs = Job.objects.filter(brother = self.brother.id).order_by('-year')
+        self.positions = []
         for heldPosition in heldPositions:
-            self.majors.append(heldPosition.position)
-        
-        
+            self.positions.append(heldPosition)
+        self.jobs = []
+        for job in retrievedJobs:
+            self.jobs.append(job)

@@ -2,9 +2,10 @@ from django.shortcuts import render, get_object_or_404
 
 from django.http import HttpResponse
 from django.template import Context, loader
+from django.db.models import Q
 import math
 
-from articles.models import Article, ArticleCategory, ArticleEntity, Gallery, Picture
+from articles.models import Article, ArticleEntity
 from listing.pages import PageHelper
 
 default_count_per_page = 5
@@ -13,11 +14,10 @@ max_pages_listed_on_screen = 5
  
 def general_listing(request, eventType, category):
     t = loader.get_template('article_list.html')
+    category_query = Q()
     if category != None:
-        type_id = ArticleCategory.objects.filter(name=category)[0].id
-        article_list = Article.objects.filter(category=type_id).order_by('date').reverse()
-    else:
-        article_list = Article.objects.all().order_by('date').reverse()
+        category_query = Q(category__name=category)
+    article_list = Article.objects.filter(category_query).order_by('date').reverse()
     article_count = PageHelper.get_request_count(request, default_count_per_page, max_count_per_page)
     page_number = PageHelper.get_page_number(request)
     articles_range_min = (page_number - 1) * article_count
@@ -49,8 +49,8 @@ def service(request):
 def professional_development(request):
     return general_listing(request, 'Professional Development', 'PD')
 
-def social(request):
-    return general_listing(request, 'Social', 'Social')
+def brotherhood(request):
+    return general_listing(request, 'Brotherhood', 'Brotherhood')
 
 def get_article(request, article_id):
     art = get_object_or_404(Article, pk=article_id)

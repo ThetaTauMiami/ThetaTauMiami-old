@@ -6,7 +6,7 @@ from django.template import Context, loader
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Q
 
-from info.models import Brother, Officer, BrotherEntity, Major
+from info.models import Brother, Officer, BrotherEntity, Major, Job
 from info import utility
 from marketing.models import Picture as MarketingPic
 from articles.models import Article
@@ -83,18 +83,24 @@ def general_listing(request, isAlumniFilter, isPledgeFilter, name):
 
 def resumes(request):
     year = date.today().year
-    years = []
-    for i in xrange(5):
-        years.append(year+i)
+    years = range(year, year+5)
     grad_year_requests = request.GET.getlist('gradyear')
-    reqs = Q()
+    major_requests = request.GET.getlist('major')
+    grad_year_reqs = Q()
     for grad_year_request in grad_year_requests:
-        reqs = reqs | Q(graduationYear=int(grad_year_request))
-    brothers = Brother.objects.filter(reqs).order_by('lastName', 'firstName', 'middleName')
+        grad_year_reqs = grad_year_reqs | Q(graduationYear=int(grad_year_request))
+    major_reqs = Q()
+    for major_request in major_requests:
+        major_reqs = major_reqs | Q(majors__majorName=major_request)
+    brothers = Brother.objects.filter(major_reqs, grad_year_reqs).order_by('lastName', 'firstName', 'middleName')
     majors = Major.objects.all().order_by('majorName')
     c = Context({'brothers': brothers, 'majors': majors, 'years': years})
     t = loader.get_template('resume_list.html')
     return HttpResponse(t.render(c))
+
+def careers(request):
+    jobs = Job.objects.all().order_by('-year')
+    return render(request, 'careers.html', {'jobs': jobs})
 
 def convert_brothers_to_brotherentities(broList):
     '''

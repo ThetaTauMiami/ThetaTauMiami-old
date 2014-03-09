@@ -14,6 +14,7 @@ urlpatterns = patterns('',
     url(r'^pledges/$', views.pledges, name='pledges'),
     url(r'^alumni/$', views.alumni, name='alumni'),
     url(r'^brother/(?P<brother_id>\d+)', views.brother_profile, name="brother_profile"),
-    url(r'^resumes/$', views.resumes, name='resumes')
+    url(r'^resumes/$', views.resumes, name='resumes'),
+    url(r'^careers/$', views.careers, name='careers')
     
 )
