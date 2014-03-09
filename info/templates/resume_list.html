@@ -42,9 +42,9 @@
     	<hr />
     	<div class='container'>
 
-  		   <div class="row">
 
 			{% for brother in brothers %}
+  		   <div class="row">
 			<div class='col-md-2'>
 				<a href='/info/brother/{{ brother.id }}'>{{ brother.lastName }}, {{ brother.firstName }} {{ brother.middleName }}</a> 
 			</div>
@@ -59,12 +59,10 @@
 					{{ major }}
 				</div>
 				{% endfor %}
-			
-			<br />
+     	   </div>
 			<hr />
 			{% endfor %}
 
-     	   </div>
 
        <hr />
        </div>
