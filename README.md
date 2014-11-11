@@ -1,3 +1,10 @@
+# Note
+This code once supported the fraternity website for the Miami University Colony of Theta Tau.
+The website has moved from being powered by Django to being powered by Jekyll as Jekyll allows for significantly easier maintanence and hosting.
+The new website repository can be found at github.com/ThetaTauMiami/thetataumiami.github.io.
+This repository is kept purely for archival purposes. 
+The remainder of this README is kept unchanged from the website's final state.
+
 # The Website for Theta Tau - Miami University Colony
 
 ## Requirements
